@@ -10,7 +10,7 @@ const gulpif = require('gulp-if');
 const debug = require('gulp-debug');
 
 const dir = {
-    dev: 'src',
+    dev: 'task-unl/src',
     pbl: 'public',
     bld: 'build',
     base: 'http://localhost:3000'
@@ -26,40 +26,40 @@ task('compileHtml', () => {
             prefix: '@@',
             basepath: `${dir.dev}/assets/templates`,
         }))
-        .pipe(replace(/<script.+script>/g, (htmlTag) => {
-            return htmlTag.match(/<script.+index.js"><\/script>/) ? htmlTag : '';
-        }))
-        .pipe(replace(/<div class="gallery">(.|\n|\s)*?<\/div>/g, (gallery) => {
-            const images = gallery.replace(/<img .+?>/g, '<figure class="thumb">$&</figure>');
-            return images;
-        }))
-        .pipe(replace(/<img .+?>/g, (imgTag) => {
-            const tag = imgTag.replace(/\.\.\//, '');
-            // .replace(/\.jpg/, "-lg.jpeg");
-            const regPath = /src=['"](.*?)['"]/;
-            const regAlt = /alt=['"](.*?)['"]/;
-            const regClass = /class=['"](.*?)['"]/;
-            const src = tag.match(regPath)[1].toLowerCase();
-            const srcSet = `
-                ${src.slice(0, -4)}-sm.jpeg 300w,
-                ${src.slice(0, -4)}-md.jpeg 600w,
-                ${src.slice(0, -4)}-lg.jpeg 1200w,
-                ${src.slice(0, -4)}-xlg.jpeg 1800w
-            `;
-            const sizes = `
-                sizes="(max-width: 280px) 300px,
-                (max-width: 580px) 600px,
-                (max-width: 1180px) 1200px,
-                1920px"
-            `;
-            const alt = tag.match(regAlt) ? tag.match(regAlt)[1] : 'dzerava';
-            const classT = tag.match(regClass) ? tag.match(regClass)[1] : '';
-            const tagN = `<img class="${classT}"
-            srcset="${srcSet}"
-            ${sizes}
-            src="${src.slice(0, -4)}-sm.jpeg" alt="${alt}">`
-            return tagN;
-        }))
+        // .pipe(replace(/<script.+script>/g, (htmlTag) => {
+        //     return htmlTag.match(/<script.+index.js"><\/script>/) ? htmlTag : '';
+        // }))
+        // .pipe(replace(/<div class="gallery">(.|\n|\s)*?<\/div>/g, (gallery) => {
+        //     const images = gallery.replace(/<img .+?>/g, '<figure class="thumb">$&</figure>');
+        //     return images;
+        // }))
+        // .pipe(replace(/<img .+?>/g, (imgTag) => {
+        //     const tag = imgTag.replace(/\.\.\//, '');
+        //     // .replace(/\.jpg/, "-lg.jpeg");
+        //     const regPath = /src=['"](.*?)['"]/;
+        //     const regAlt = /alt=['"](.*?)['"]/;
+        //     const regClass = /class=['"](.*?)['"]/;
+        //     const src = tag.match(regPath)[1].toLowerCase();
+        //     const srcSet = `
+        //         ${src.slice(0, -4)}-sm.jpeg 300w,
+        //         ${src.slice(0, -4)}-md.jpeg 600w,
+        //         ${src.slice(0, -4)}-lg.jpeg 1200w,
+        //         ${src.slice(0, -4)}-xlg.jpeg 1800w
+        //     `;
+        //     const sizes = `
+        //         sizes="(max-width: 280px) 300px,
+        //         (max-width: 580px) 600px,
+        //         (max-width: 1180px) 1200px,
+        //         1920px"
+        //     `;
+        //     const alt = tag.match(regAlt) ? tag.match(regAlt)[1] : 'dzerava';
+        //     const classT = tag.match(regClass) ? tag.match(regClass)[1] : '';
+        //     const tagN = `<img class="${classT}"
+        //     srcset="${srcSet}"
+        //     ${sizes}
+        //     src="${src.slice(0, -4)}-sm.jpeg" alt="${alt}">`
+        //     return tagN;
+        // }))
         // .pipe(gulpif(isDev, htmlmin({ collapseWhitespace: true })))
         .pipe(dest(dir.pbl));
 });
@@ -133,67 +133,67 @@ task('compileProdImg', () => {
     const imageResize = require('gulp-image-resize');
     const responsive = require('gulp-responsive');
     return src(`${dir.dev}/images/**/*.{png,PNG,jpg,JPG,jpeg,JPEG}`, {since: gulp.lastRun('compileProdImg')})
-    .pipe(map((file, cb) => {
-        file.path = path.join(file.base.toLowerCase(), file.relative.toLowerCase());
-        cb(null, file);
-    }))
-    // .on('data', (file) => console.log(file.path))
-    .pipe(responsive({
-        '**/*.jpg': [{
-            width: 200,
-            rename: {
-                suffix: '-sm',
-                extname: '.jpg',
-            },
-          }, {
-            width: 600,
-            rename: {
-                suffix: '-md',
-                extname: '.jpg',
-            },
-          }, {
-            width: 1200,
-            rename: {
-                suffix: '-lg',
-                extname: '.jpg',
-            },
-          }, {
-            width: 1800,
-            rename: {
-                suffix: '-xlg',
-                extname: '.jpg',
-            },
-          }],
-          // Resize all PNG images to be retina ready
-        //   '**/*.png': [{
-        //     width: 250,
-        //   }, {
-        //     width: 250 * 2,
-        //     rename: { suffix: '@2x' },
-        //   }],
-        }, {
-          // Global configuration for all images
-          // The output quality for JPEG, WebP and TIFF output formats
-          quality: 70,
-          // Use progressive (interlace) scan for JPEG and PNG output
-          progressive: true,
-          // Strip all metadata
-          withMetadata: true,
-          withoutEnlargement: false,
-        }
-    ))
-    .pipe(gulpif(file => file.stem.match(/-lg/),
-        gm(function (gmfile, done) {
-            gmfile.size(function (err, size) {
-                done(null, gmfile
-                  // .draw(`image Over 100,100 100,100 ${dir.dev}/assets/images/dzerava_watermark.png`)
-                  .command('composite')
-                  .gravity('Center')
-                  .in(`${dir.dev}/assets/images/watermark-lg.png`)
-                );
-            });
-        })
-    ))
+    // .pipe(map((file, cb) => {
+    //     file.path = path.join(file.base.toLowerCase(), file.relative.toLowerCase());
+    //     cb(null, file);
+    // }))
+    // // .on('data', (file) => console.log(file.path))
+    // .pipe(responsive({
+    //     '**/*.jpg': [{
+    //         width: 200,
+    //         rename: {
+    //             suffix: '-sm',
+    //             extname: '.jpg',
+    //         },
+    //       }, {
+    //         width: 600,
+    //         rename: {
+    //             suffix: '-md',
+    //             extname: '.jpg',
+    //         },
+    //       }, {
+    //         width: 1200,
+    //         rename: {
+    //             suffix: '-lg',
+    //             extname: '.jpg',
+    //         },
+    //       }, {
+    //         width: 1800,
+    //         rename: {
+    //             suffix: '-xlg',
+    //             extname: '.jpg',
+    //         },
+    //       }],
+    //       // Resize all PNG images to be retina ready
+    //     //   '**/*.png': [{
+    //     //     width: 250,
+    //     //   }, {
+    //     //     width: 250 * 2,
+    //     //     rename: { suffix: '@2x' },
+    //     //   }],
+    //     }, {
+    //       // Global configuration for all images
+    //       // The output quality for JPEG, WebP and TIFF output formats
+    //       quality: 70,
+    //       // Use progressive (interlace) scan for JPEG and PNG output
+    //       progressive: true,
+    //       // Strip all metadata
+    //       withMetadata: true,
+    //       withoutEnlargement: false,
+    //     }
+    // ))
+    // .pipe(gulpif(file => file.stem.match(/-lg/),
+    //     gm(function (gmfile, done) {
+    //         gmfile.size(function (err, size) {
+    //             done(null, gmfile
+    //               // .draw(`image Over 100,100 100,100 ${dir.dev}/assets/images/dzerava_watermark.png`)
+    //               .command('composite')
+    //               .gravity('Center')
+    //               .in(`${dir.dev}/assets/images/watermark-lg.png`)
+    //             );
+    //         });
+    //     })
+    // ))
     .pipe(dest(`${dir.pbl}/images`))
 })
 
@@ -227,7 +227,7 @@ task('start', gulp.series(
     'addFonts',
     'compileScripts',
     'compileServImg',
-    // 'compileProdImg',
+    'compileProdImg',
     gulp.parallel(
         'watch',
         'serve'
