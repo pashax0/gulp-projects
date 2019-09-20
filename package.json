@@ -1,0 +1,72 @@
+{
+  "name": "gulp-projects",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pashax0",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/plugin-syntax-jsx": "^7.2.0",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.6.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "cssnano": "^4.1.10",
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-react": "^7.14.2",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-debug": "^4.0.0",
+    "gulp-file-include": "^2.0.1",
+    "gulp-gm": "0.0.9",
+    "gulp-image-resize": "^0.13.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-responsive": "^2.14.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "jquery": "^3.4.1",
+    "node-normalize-scss": "^8.0.0",
+    "node-sass": "^4.12.0",
+    "vinyl-named": "^1.1.0",
+    "webpack": "^4.35.3",
+    "webpack-stream": "^5.2.1"
+  },
+  "dependencies": {
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "browser-sync": "^2.26.7",
+    "del": "^5.0.0",
+    "gm": "^1.23.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-if": "^2.0.2",
+    "gulp-replace": "^1.0.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "map-stream": "0.0.7",
+    "normalize.css": "^8.0.1",
+    "sharp": "^0.22.1"
+  },
+  "browserslist": [
+    "last 2 version",
+    "> 0.2%",
+    "not dead"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pashax0/gulp-projects.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pashax0/gulp-projects/issues"
+  },
+  "homepage": "https://github.com/pashax0/gulp-projects#readme",
+  "description": ""
+}
